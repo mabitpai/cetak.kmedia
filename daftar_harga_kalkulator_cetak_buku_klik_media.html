@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Harga & Simulasi Cetak Buku - Klik Media Penerbit dan Percetakan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+        }
+        .table-row-hover:hover td {
+            background-color: #eff6ff;
+            transition: background-color 0.15s ease-in-out;
+        }
+        .active-row td {
+            background-color: #dbeafe !important;
+            font-weight: 700;
+        }
+        /* Print Styles for Brochure / PDF Export */
+        @media print {
+            body {
+                background-color: #ffffff;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .print-break {
+                page-break-before: always;
+            }
+            .shadow-xl, .shadow-lg, .shadow-md {
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-brand-600 selection:text-white">
+
+    <!-- STICKY HEADER / NAVBAR -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Brand Identity -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-brand-700 to-brand-900 flex items-center justify-center text-white shadow-md shadow-brand-600/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-book-open-reader text-lg sm:text-xl text-gold-400"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900">KLIK MEDIA</span>
+                            <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                                <i class="fa-solid fa-certificate mr-1 text-amber-600"></i> Anggota IKAPI
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium">Penerbit dan Percetakan Buku Berkualitas</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+                    <a href="#kalkulator" class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-calculator text-brand-600"></i> Simulasi Biaya
+                    </a>
+                    <a href="#tabel-harga" class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-table-list text-brand-600"></i> Tabel Harga Cetak
+                    </a>
+                    <a href="#promo-hki" class="hover:text-amber-600 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-award text-amber-500"></i> Promo HKI
+                    </a>
+                    <a href="https://paket.kmedia.id/" target="_blank" rel="noopener noreferrer" class="hover:text-brand-600 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-box-open text-brand-600"></i> Paket Penerbitan <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-70"></i>
+                    </a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="window.print()" class="hidden lg:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all" title="Cetak atau Simpan PDF Daftar Harga">
+                        <i class="fa-solid fa-print"></i> Simpan PDF
+                    </button>
+                    <a href="https://wa.me/6281336335612?text=Halo%20Admin%20Klik%20Media,%20saya%20ingin%20konsultasi%20cetak%20buku." target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 shadow-md shadow-emerald-600/20 transition-all active:scale-95">
+                        <i class="fa-brands fa-whatsapp text-base sm:text-lg"></i>
+                        <span>Chat Admin</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- PRINT HEADER (Hanya tampil saat dicetak/PDF) -->
+    <div class="hidden print-only border-b-2 border-slate-800 pb-4 mb-6 px-6 pt-4">
+        <div class="flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-extrabold text-slate-900">KLIK MEDIA PENERBIT DAN PERCETAKAN</h1>
+                <p class="text-sm font-semibold text-slate-600">Anggota IKAPI | Layanan Penerbitan & Percetakan Buku (POD & Offset)</p>
+                <p class="text-xs text-slate-500 mt-1">Alamat: RT 10 RW 04 Kebonsari Barat, Yosowilangun, Lumajang, Jawa Timur</p>
+            </div>
+            <div class="text-right">
+                <p class="text-sm font-bold text-slate-800">WhatsApp / Telp:</p>
+                <p class="text-sm font-bold text-emerald-700">0813-3633-5612</p>
+                <p class="text-xs text-slate-600">0853-3415-0580 | IG: @kmedia.id</p>
+                <p class="text-[11px] font-bold text-brand-800 mt-1">Rekening Resmi: BRI 632101012714532 (a.n. Abdul Muis)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION (ELEGANT & PROFESSIONAL) -->
+    <section class="hero-gradient text-white pt-12 pb-20 sm:py-20 relative overflow-hidden no-print">
+        <!-- Decorative Background Elements -->
+        <div class="absolute top-0 right-0 -translate-y-12 translate-x-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/4 w-80 h-80 bg-amber-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-amber-300 text-xs sm:text-sm font-semibold mb-6">
+                    <i class="fa-solid fa-award text-amber-400"></i>
+                    <span>Penerbit &amp; Percetakan Resmi Anggota IKAPI</span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-5">
+                    Layanan Cetak Buku Kualitas Penerbit &amp; <span class="text-amber-400">Standar Akademik</span>
+                </h1>
+                <p class="text-slate-200 text-sm sm:text-base lg:text-lg leading-relaxed mb-9 max-w-2xl mx-auto">
+                    Solusi cetak buku satuan (<em>Print on Demand</em>) hingga partai besar dengan standar mutu anggota IKAPI. Presisi tinggi, penjilidan kuat, dan harga transparan untuk penulis, dosen, guru, serta instansi.
+                </p>
+
+                <!-- Hero CTA Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                    <a href="#kalkulator" class="px-6 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm sm:text-base shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> Hitung Simulasi Biaya
+                    </a>
+                    <a href="#tabel-harga" class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold text-sm sm:text-base transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-table-list"></i> Lihat Daftar Harga
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STANDAR SPESIFIKASI PRODUKSI (RAPI & TERSTRUKTUR) -->
+    <section class="relative z-20 -mt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200/90 p-5 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 mb-5 border-b border-slate-100">
+                <div class="flex items-center gap-2.5">
+                    <span class="w-2.5 h-6 rounded-full bg-brand-600"></span>
+                    <h2 class="text-sm sm:text-base font-extrabold text-slate-900 uppercase tracking-wide">
+                        Standar Spesifikasi Produksi Buku Klik Media
+                    </h2>
+                </div>
+                <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full self-start sm:self-auto">
+                    <i class="fa-solid fa-circle-check mr-1"></i> Berlaku untuk Seluruh Paket Cetak
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Spec 1: Kertas Isi -->
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                        <i class="fa-solid fa-file-lines text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Kertas Isi</div>
+                        <div class="text-sm font-extrabold text-slate-900 mt-0.5">Bookpaper / HVS</div>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Pilihan Bookpaper (nyaman di mata) atau HVS putih bersih, cetak hitam-putih tajam.</p>
+                    </div>
+                </div>
+
+                <!-- Spec 2: Kertas Cover -->
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                        <i class="fa-solid fa-palette text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Material Cover</div>
+                        <div class="text-sm font-extrabold text-slate-900 mt-0.5">Art Paper 230/260 gr</div>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Kertas sampul tebal standar toko buku dengan cetak warna penuh (<em>Full Color</em>).</p>
+                    </div>
+                </div>
+
+                <!-- Spec 3: Laminasi Cover -->
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Pelindung Cover</div>
+                        <div class="text-sm font-extrabold text-slate-900 mt-0.5">Laminasi Doff / Glossy</div>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Bebas pilih laminasi <em>Doff</em> (elegan/redup) atau <em>Glossy</em> (mengkilap &amp; tahan air).</p>
+                    </div>
+                </div>
+
+                <!-- Spec 4: Penjilidan & Kemasan -->
+                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70 flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 font-bold">
+                        <i class="fa-solid fa-book text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Finishing &amp; Kemasan</div>
+                        <div class="text-sm font-extrabold text-slate-900 mt-0.5">Lem Panas + Shrink</div>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">Jilid <em>Perfect Binding</em> (lem panas kuat) dan disegel plastik <em>shrink</em> rapi per buku.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE COST CALCULATOR SECTION -->
+    <section id="kalkulator" class="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 no-print">
+        <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-brand-600 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">Simulasi Otomatis</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Kalkulator Simulasi Biaya Cetak</h2>
+            <p class="text-sm sm:text-base text-slate-600 mt-1">Pilih ukuran, jumlah halaman, dan jumlah eksemplar untuk mengetahui estimasi biaya cetak secara instan.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+            <!-- Left Column: Calculator Inputs -->
+            <div class="lg:col-span-7 bg-white rounded-2xl shadow-lg border border-slate-200/80 p-5 sm:p-7 space-y-6">
+                
+                <!-- 1. Pilihan Ukuran Buku -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-800 mb-2.5">
+                        1. Pilih Ukuran Buku <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button type="button" id="btn-size-a5" onclick="setBookSize('A5')"
+                            class="text-left p-4 rounded-xl border-2 border-brand-600 bg-brand-50/60 transition-all flex items-start justify-between relative">
+                            <div>
+                                <div class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                                    <span>Ukuran A5</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-md bg-brand-600 text-white font-bold">Populer</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mt-1">Dimensi: <strong>14,8 x 21 cm</strong></p>
+                                <p class="text-[11px] text-slate-500 mt-0.5">Mulai Rp20.500/eks (Grosir) | Rp27.500 (Ecer)</p>
+                            </div>
+                            <i id="icon-size-a5" class="fa-solid fa-circle-check text-brand-600 text-lg"></i>
+                        </button>
+
+                        <button type="button" id="btn-size-unesco" onclick="setBookSize('UNESCO')"
+                            class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-slate-300 bg-white transition-all flex items-start justify-between relative">
+                            <div>
+                                <div class="font-extrabold text-slate-900 text-base flex items-center gap-2">
+                                    <span>UNESCO / B5</span>
+                                    <span class="text-[11px] px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 font-bold">Standar Dikti</span>
+                                </div>
+                                <p class="text-xs text-slate-600 mt-1">Dimensi: <strong>15,5 x 23 cm</strong> / 17,5 x 25 cm</p>
+                                <p class="text-[11px] text-slate-500 mt-0.5">Mulai Rp26.000/eks (Grosir) | Rp32.500 (Ecer)</p>
+                            </div>
+                            <i id="icon-size-unesco" class="fa-regular fa-circle text-slate-300 text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. Jumlah Halaman & Paket Cetak -->
+                <div class="pt-2 border-t border-slate-100">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                        <label for="input-pages" class="text-sm font-bold text-slate-800">
+                            2. Jumlah Halaman Buku <span class="text-rose-500">*</span>
+                        </label>
+                        <span id="badge-detected-paket" class="text-xs font-extrabold px-2.5 py-1 rounded-lg bg-brand-100 text-brand-800">
+                            Paket 1 (60–80 Halaman)
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+                        <!-- Input Angka Halaman -->
+                        <div class="sm:col-span-5 relative">
+                            <input type="number" id="input-pages" min="40" max="600" value="80" oninput="onPagesInputChange(this.value)"
+                                class="w-full pl-4 pr-16 py-2.5 rounded-xl border border-slate-300 font-bold text-slate-900 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                            <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Halaman</span>
+                        </div>
+
+                        <!-- Dropdown Pilih Paket Langsung -->
+                        <div class="sm:col-span-7">
+                            <select id="select-paket" onchange="onPaketSelectChange(this.value)"
+                                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50 font-semibold text-sm text-slate-800 focus:ring-2 focus:ring-brand-500 outline-none">
+                                <!-- Diisi via JS -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Slider Halaman -->
+                    <div class="mt-3">
+                        <input type="range" id="slider-pages" min="60" max="300" step="1" value="80" oninput="onPagesInputChange(this.value)"
+                            class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
+                        <div class="flex justify-between text-[11px] font-medium text-slate-400 mt-1">
+                            <span>60 Hlm (Paket 1)</span>
+                            <span>140 Hlm (Paket 4)</span>
+                            <span>220 Hlm (Paket 8)</span>
+                            <span>300 Hlm (Paket 12)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Jumlah Eksemplar (Kuantitas Cetak) -->
+                <div class="pt-2 border-t border-slate-100">
+                    <div class="flex items-center justify-between mb-2.5">
+                        <label for="input-qty" class="text-sm font-bold text-slate-800">
+                            3. Jumlah Cetak (Eksemplar) <span class="text-rose-500">*</span>
+                        </label>
+                        <span id="badge-detected-tier" class="text-xs font-extrabold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800">
+                            Kategori: 2–4 Eks
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="adjustQty(-1)" class="w-11 h-11 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 font-bold text-lg text-slate-700 flex items-center justify-center active:scale-95 transition">
+                            <i class="fa-solid fa-minus text-xs"></i>
+                        </button>
+                        <div class="relative flex-1">
+                            <input type="number" id="input-qty" min="1" max="2000" value="3" oninput="onQtyInputChange(this.value)"
+                                class="w-full text-center py-2.5 px-4 rounded-xl border border-slate-300 font-extrabold text-lg text-slate-900 focus:ring-2 focus:ring-brand-500 outline-none">
+                            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Eks</span>
+                        </div>
+                        <button type="button" onclick="adjustQty(1)" class="w-11 h-11 rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 font-bold text-lg text-slate-700 flex items-center justify-center active:scale-95 transition">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </button>
+                    </div>
+
+                    <!-- Tombol Pintasan Kuantitas -->
+                    <div class="mt-3">
+                        <span class="text-[11px] font-semibold text-slate-400 block mb-1.5">Pilih Cepat Jumlah Cetak:</span>
+                        <div class="grid grid-cols-5 gap-2">
+                            <button type="button" onclick="setExactQty(2)" class="qty-preset py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">2 Eks</button>
+                            <button type="button" onclick="setExactQty(5)" class="qty-preset py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">5 Eks</button>
+                            <button type="button" onclick="setExactQty(10)" class="qty-preset py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">10 Eks</button>
+                            <button type="button" onclick="setExactQty(26)" class="qty-preset py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">26 Eks</button>
+                            <button type="button" onclick="setExactQty(51)" class="qty-preset py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">51 Eks</button>
+                        </div>
+                    </div>
+
+                    <!-- Smart Saving / Upsell Box -->
+                    <div id="smart-tip-box" class="mt-3 hidden rounded-xl bg-amber-50 border border-amber-300 p-3 text-xs text-amber-900 flex items-start gap-2.5">
+                        <i class="fa-solid fa-lightbulb text-amber-500 text-base mt-0.5 shrink-0"></i>
+                        <div id="smart-tip-text" class="leading-relaxed"></div>
+                    </div>
+                </div>
+
+                <!-- 4. Pilihan Jenis Cover -->
+                <div class="pt-2 border-t border-slate-100">
+                    <label class="block text-sm font-bold text-slate-800 mb-2.5">4. Jenis Jilid Cover</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label class="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
+                            <input type="radio" name="coverType" value="soft" checked onchange="calculateAll()" class="w-4 h-4 text-brand-600 focus:ring-brand-500">
+                            <div class="text-xs">
+                                <div class="font-bold text-slate-800 text-sm">Soft Cover (Standar)</div>
+                                <div class="text-slate-500 mt-0.5">Termasuk di harga paket (Gratis)</div>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3.5 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
+                            <input type="radio" name="coverType" value="hard" onchange="calculateAll()" class="w-4 h-4 text-brand-600 focus:ring-brand-500">
+                            <div class="text-xs">
+                                <div class="font-bold text-slate-800 text-sm">Hard Cover Eksklusif</div>
+                                <div id="label-hardcover-price" class="text-brand-600 font-extrabold mt-0.5">+Rp15.000 / eks</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Info Layanan Pracetak & Paket Penerbitan -->
+                <div class="pt-2 border-t border-slate-100">
+                    <div class="rounded-xl bg-gradient-to-r from-brand-50 to-indigo-50 border border-brand-200 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-brand-600 text-white flex items-center justify-center shrink-0 mt-0.5">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            </div>
+                            <div class="text-xs">
+                                <span class="font-extrabold text-slate-900 block">Butuh Layanan Pracetak (Layout, Desain Cover, ISBN) & Paket Terbit?</span>
+                                <span class="text-slate-600">Lihat pilihan paket penerbitan lengkap dan hemat di portal resmi Klik Media.</span>
+                            </div>
+                        </div>
+                        <a href="https://paket.kmedia.id/" target="_blank" rel="noopener noreferrer"
+                           class="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shrink-0 shadow-sm transition">
+                            <span>Cek Paket Penerbitan</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Nama / Judul Buku (Opsional untuk format pesan WA) -->
+                <div class="pt-2 border-t border-slate-100">
+                    <label for="input-title" class="block text-xs font-bold text-slate-600 mb-1.5">
+                        Nama Pemesan / Judul Naskah (Opsional - untuk mempermudah pesan WhatsApp):
+                    </label>
+                    <input type="text" id="input-title" placeholder="Contoh: Dr. Budi Santoso - Buku Ajar Manajemen..." oninput="calculateAll()"
+                        class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm text-slate-800 focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+            </div>
+
+            <!-- Right Column: Sticky Summary Receipt -->
+            <div class="lg:col-span-5 lg:sticky lg:top-24">
+                <div class="bg-slate-900 text-white rounded-2xl shadow-xl overflow-hidden border border-slate-800">
+                    <div class="bg-gradient-to-r from-brand-700 to-brand-900 px-6 py-4 border-b border-white/10 flex items-center justify-between">
+                        <div>
+                            <h3 class="font-extrabold text-base sm:text-lg text-white">Rincian Estimasi Biaya</h3>
+                            <p class="text-xs text-blue-200">Klik Media Penerbit & Percetakan</p>
+                        </div>
+                        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-amber-300">
+                            <i class="fa-solid fa-receipt text-lg"></i>
+                        </div>
+                    </div>
+
+                    <div class="p-6 space-y-4">
+                        <!-- Summary Details -->
+                        <div class="space-y-2.5 text-sm border-b border-slate-800 pb-4">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Ukuran Buku:</span>
+                                <span id="sum-size" class="font-bold text-white">A5 (14,8 x 21 cm)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Ketebalan Naskah:</span>
+                                <span id="sum-pages" class="font-bold text-amber-300">80 Hlm (Paket 1)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Jumlah Cetak:</span>
+                                <span id="sum-qty" class="font-bold text-white">3 Eksemplar</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">Harga Cetak / Eks:</span>
+                                <span id="sum-unit-price" class="font-bold text-emerald-400">Rp27.500</span>
+                            </div>
+                            <div id="row-setup-fee" class="hidden flex justify-between text-xs bg-amber-500/10 border border-amber-500/30 rounded-lg px-2.5 py-1.5 text-amber-300">
+                                <span>Biaya Setup Cetak 1 Eks:</span>
+                                <span id="sum-setup-fee" class="font-bold">+Rp5.000</span>
+                            </div>
+                            <div id="row-hardcover-fee" class="hidden flex justify-between text-xs text-sky-300">
+                                <span>Tambahan Hard Cover:</span>
+                                <span id="sum-hardcover-fee" class="font-bold">+Rp45.000</span>
+                            </div>
+                            <div id="row-hki-fee" class="hidden flex justify-between text-xs bg-amber-400/15 border border-amber-400/30 rounded-lg px-2.5 py-1.5 text-amber-300">
+                                <span><i class="fa-solid fa-shield-halved mr-1"></i> Promo Sertifikat HKI:</span>
+                                <span class="font-bold">+Rp500.000</span>
+                            </div>
+                        </div>
+
+                        <!-- Promo HKI Quick Toggle inside Receipt -->
+                        <label class="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-amber-500/20 to-amber-400/10 border border-amber-400/40 cursor-pointer hover:border-amber-400 transition">
+                            <span class="flex items-center gap-2.5 text-xs">
+                                <input type="checkbox" id="addon-hki" onchange="calculateAll()" class="w-4 h-4 rounded text-amber-500 focus:ring-amber-400">
+                                <span>
+                                    <strong class="text-amber-300 block">Sekalian Urus Sertifikat HKI?</strong>
+                                    <span class="text-[11px] text-slate-300">Promo Spesial Hak Cipta Resmi</span>
+                                </span>
+                            </span>
+                            <span class="px-2.5 py-1 rounded-lg bg-amber-400 text-slate-950 font-extrabold text-xs">+Rp500rb</span>
+                        </label>
+
+                        <!-- Total Price Display -->
+                        <div class="pt-1">
+                            <div class="flex items-baseline justify-between">
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Estimasi Biaya</span>
+                                <span id="sum-total" class="text-2xl sm:text-3xl font-extrabold text-amber-400">Rp82.500</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1 flex items-center justify-end gap-1">
+                                <i class="fa-solid fa-truck-fast text-slate-500"></i> Belum termasuk ongkos kirim ke alamat tujuan
+                            </p>
+                        </div>
+
+                        <!-- Informasi Pembayaran Resmi di Kartu Ringkasan -->
+                        <div class="bg-slate-800/95 rounded-xl p-3.5 text-xs text-slate-300 border border-slate-700 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-building-columns"></i> Rekening Pembayaran Resmi:
+                                </span>
+                                <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-extrabold text-[11px] border border-blue-400/30">BANK BRI</span>
+                            </div>
+                            <p class="text-[11px] text-slate-300 leading-relaxed">
+                                Pembayaran hanya dilakukan melalui nomor rekening <strong>BRI 632101012714532</strong> atas nama <strong>Abdul Muis</strong>.
+                            </p>
+                            <div class="flex items-center justify-between bg-slate-900/90 px-3 py-2 rounded-lg border border-slate-700/80">
+                                <div>
+                                    <div class="font-mono font-extrabold text-sm text-white tracking-wider">632101012714532</div>
+                                    <div class="text-[11px] text-slate-400">a.n. Abdul Muis</div>
+                                </div>
+                                <button type="button" onclick="copyRekening('btn-copy-rek-calc')" id="btn-copy-rek-calc"
+                                    class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-600 font-bold text-[11px] flex items-center gap-1.5 transition">
+                                    <i class="fa-regular fa-copy"></i> <span>Salin</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Order CTA -->
+                        <a id="btn-wa-order" href="#" target="_blank" rel="noopener noreferrer"
+                           class="w-full py-3.5 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm sm:text-base shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2.5 transition-all active:scale-95">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            <span>Pesan Cetak Ini via WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICE TABLES SECTION -->
+    <section id="tabel-harga" class="py-10 sm:py-14 bg-white border-t border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-brand-600 bg-brand-50 px-3 py-1 rounded-full border border-brand-200 no-print">Daftar Harga Resmi</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">Tabel Harga Cetak Buku Terbatas & Grosir</h2>
+                    <p class="text-sm text-slate-600 mt-1">Klik pada salah satu baris paket di bawah untuk langsung menghitung estimasi biayanya di kalkulator.</p>
+                </div>
+
+                <!-- Tab Switcher (A5 vs UNESCO/B5 vs Tampilkan Semua) -->
+                <div class="inline-flex p-1.5 rounded-xl bg-slate-100 border border-slate-200 self-start no-print">
+                    <button type="button" id="tab-all" onclick="switchTableTab('ALL')"
+                        class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white text-brand-700 shadow-sm transition">
+                        Semua Ukuran
+                    </button>
+                    <button type="button" id="tab-a5" onclick="switchTableTab('A5')"
+                        class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition">
+                        Ukuran A5
+                    </button>
+                    <button type="button" id="tab-unesco" onclick="switchTableTab('UNESCO')"
+                        class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition">
+                        UNESCO / B5
+                    </button>
+                </div>
+            </div>
+
+            <!-- TABEL 1: UKURAN A5 -->
+            <div id="container-table-a5" class="mb-12">
+                <div class="bg-gradient-to-r from-brand-800 to-brand-600 text-white rounded-t-2xl px-5 py-4 flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-3">
+                        <span class="w-9 h-9 rounded-lg bg-white/15 flex items-center justify-center font-extrabold text-amber-300">A5</span>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-extrabold">1. Daftar Harga Cetak Buku Ukuran A5 (14,8 x 21 cm)</h3>
+                            <p class="text-xs text-blue-100">Kertas Isi Bookpaper / HVS | Cover AP230/260gr Full Color Laminasi | Jilid Lem Panas + Shrink</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-amber-400 text-slate-950 px-3 py-1 rounded-full">Harga per Eksemplar</span>
+                </div>
+
+                <div class="overflow-x-auto border-x border-b border-slate-200 rounded-b-2xl shadow-sm">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 border-b border-slate-200 text-xs sm:text-sm font-extrabold uppercase">
+                                <th class="py-3.5 px-4 text-center w-20">Paket</th>
+                                <th class="py-3.5 px-4">Jumlah Halaman</th>
+                                <th class="py-3.5 px-4 bg-brand-50/70 text-brand-900">2–4 Eks</th>
+                                <th class="py-3.5 px-4">5–9 Eks</th>
+                                <th class="py-3.5 px-4">10–25 Eks</th>
+                                <th class="py-3.5 px-4">26–50 Eks</th>
+                                <th class="py-3.5 px-4 text-emerald-700">&gt; 50 Eks</th>
+                                <th class="py-3.5 px-4 text-center">Tambahan Hard Cover</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-a5" class="divide-y divide-slate-200 text-xs sm:text-sm font-medium text-slate-700">
+                            <!-- Diisi via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Catatan Kaki A5 -->
+                <div class="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="space-y-1">
+                        <p><i class="fa-solid fa-circle-info text-brand-600 mr-1.5"></i><strong>Cetak Satuan (1 Eksemplar):</strong> Dikenakan tambahan biaya setup mesin <strong>+Rp5.000</strong> dari kolom harga 2–4 Eks (Contoh: Paket 1 menjadi Rp32.500).</p>
+                        <p><i class="fa-solid fa-file-circle-plus text-brand-600 mr-1.5"></i><strong>Lebih dari 300 Halaman:</strong> Setiap penambahan kelipatan 20 halaman dikenakan tambahan <strong>+Rp2.500/eks</strong>.</p>
+                    </div>
+                    <span class="text-[11px] font-bold text-slate-500 shrink-0">*Harga belum termasuk ongkos kirim</span>
+                </div>
+            </div>
+
+            <!-- TABEL 2: UKURAN UNESCO / B5 -->
+            <div id="container-table-unesco" class="print-break">
+                <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-brand-900 text-white rounded-t-2xl px-5 py-4 flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-3">
+                        <span class="w-9 h-9 rounded-lg bg-amber-400/20 border border-amber-400/40 flex items-center justify-center font-extrabold text-amber-300">B5</span>
+                        <div>
+                            <h3 class="text-base sm:text-lg font-extrabold">2. Daftar Harga Cetak Buku Ukuran UNESCO (15,5 x 23 cm) &amp; B5 (17,5 x 25 cm)</h3>
+                            <p class="text-xs text-slate-300">Standar Buku Ajar Dikti / Kampus | Isi Bookpaper / HVS | Cover Full Color Laminasi + Shrink</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold bg-amber-400 text-slate-950 px-3 py-1 rounded-full">Harga per Eksemplar</span>
+                </div>
+
+                <div class="overflow-x-auto border-x border-b border-slate-200 rounded-b-2xl shadow-sm">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 border-b border-slate-200 text-xs sm:text-sm font-extrabold uppercase">
+                                <th class="py-3.5 px-4 text-center w-20">Paket</th>
+                                <th class="py-3.5 px-4">Jumlah Halaman</th>
+                                <th class="py-3.5 px-4 bg-amber-50/80 text-amber-900">2–4 Eks</th>
+                                <th class="py-3.5 px-4">5–9 Eks</th>
+                                <th class="py-3.5 px-4">10–25 Eks</th>
+                                <th class="py-3.5 px-4">26–50 Eks</th>
+                                <th class="py-3.5 px-4 text-emerald-700">&gt; 50 Eks</th>
+                                <th class="py-3.5 px-4 text-center">Tambahan Hard Cover</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-unesco" class="divide-y divide-slate-200 text-xs sm:text-sm font-medium text-slate-700">
+                            <!-- Diisi via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Catatan Kaki UNESCO -->
+                <div class="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="space-y-1">
+                        <p><i class="fa-solid fa-circle-info text-indigo-600 mr-1.5"></i><strong>Cetak Satuan (1 Eksemplar):</strong> Dikenakan tambahan biaya setup mesin <strong>+Rp7.500</strong> dari kolom harga 2–4 Eks (Contoh: Paket 1 menjadi Rp40.000).</p>
+                        <p><i class="fa-solid fa-file-circle-plus text-indigo-600 mr-1.5"></i><strong>Lebih dari 300 Halaman:</strong> Setiap penambahan kelipatan 20 halaman dikenakan tambahan <strong>+Rp3.500/eks</strong>.</p>
+                    </div>
+                    <span class="text-[11px] font-bold text-slate-500 shrink-0">*Harga belum termasuk ongkos kirim</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMO SPESIAL HKI & LINK PAKET PRACETAK SECTION -->
+    <section id="promo-hki" class="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            
+            <!-- Banner Utama: Promo Spesial Pengurusan Sertifikat HKI Rp 500.000 -->
+            <div class="lg:col-span-7 relative rounded-3xl overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-brand-900 text-white p-6 sm:p-9 shadow-xl border border-amber-400/30 flex flex-col justify-between">
+                <!-- Ornamen Cahaya Latar -->
+                <div class="absolute -top-16 -right-16 w-64 h-64 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-16 -left-16 w-64 h-64 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10">
+                    <div class="flex flex-wrap items-center gap-2 mb-4">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-amber-400 text-slate-950 shadow-md shadow-amber-400/20">
+                            <i class="fa-solid fa-fire-flame-curved"></i> Promo Spesial Klik Media
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/10 text-amber-300 border border-white/15">
+                            <i class="fa-solid fa-shield-halved"></i> Resmi DJKI Kemenkumham RI
+                        </span>
+                    </div>
+
+                    <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight text-white">
+                        Lindungi Karya Tulis &amp; Buku Anda dengan <span class="text-amber-400">Sertifikat HKI Resmi!</span>
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base mt-2.5 leading-relaxed">
+                        Klik Media melayani pengurusan <strong>Sertifikat Hak Kekayaan Intelektual (Hak Cipta)</strong> untuk buku, modul, karya ilmiah, penelitian, hingga produk inovasi. Sangat penting untuk klaim angka kredit (KUM) dosen, syarat akreditasi, dan perlindungan hukum karya Anda.
+                    </p>
+
+                    <!-- Benefit Poin HKI -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-5 text-xs sm:text-sm text-slate-200">
+                        <div class="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5">
+                            <i class="fa-solid fa-bolt text-amber-400"></i>
+                            <span>Proses Cepat &amp; Terima Beres</span>
+                        </div>
+                        <div class="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5">
+                            <i class="fa-solid fa-file-shield text-emerald-400"></i>
+                            <span>Sertifikat Resmi Negara</span>
+                        </div>
+                        <div class="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5">
+                            <i class="fa-solid fa-user-graduate text-sky-400"></i>
+                            <span>Bisa untuk Buku, Modul &amp; Karya</span>
+                        </div>
+                        <div class="flex items-center gap-2.5 bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5">
+                            <i class="fa-solid fa-headset text-purple-400"></i>
+                            <span>Didampingi Tim Klik Media</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Harga Promo & Tombol Aksi -->
+                <div class="relative z-10 mt-7 pt-5 border-t border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs text-slate-400 line-through block">Biaya Normal: Rp600.000</span>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-amber-300">Harga Promo:</span>
+                            <span class="text-3xl sm:text-4xl font-extrabold text-amber-400">Rp500.000</span>
+                            <span class="text-xs text-slate-300">/ karya</span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2.5 no-print">
+                        <a href="https://wa.me/6281336335612?text=Halo%20Admin%20Klik%20Media,%20saya%20tertarik%20dengan%20*Promo%20Pengurusan%20Sertifikat%20HKI%20Rp500.000*.%20Mohon%20info%20persyaratannya."
+                           target="_blank" rel="noopener noreferrer"
+                           class="px-5 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-amber-400/25 flex items-center gap-2 transition-all active:scale-95">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                            <span>Daftar Promo HKI Sekarang</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kartu Kanan: Arahkan Layanan Pracetak & Paket Penerbitan ke https://paket.kmedia.id/ -->
+            <div class="lg:col-span-5 rounded-3xl bg-white border-2 border-brand-100 p-6 sm:p-8 shadow-lg flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-36 h-36 bg-brand-50 rounded-bl-full pointer-events-none"></div>
+
+                <div class="relative z-10">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-600 text-white flex items-center justify-center text-xl shadow-md shadow-brand-600/20 mb-5">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-brand-600 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
+                        Layanan Pracetak &amp; Penerbitan
+                    </span>
+                    <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-3 leading-snug">
+                        Butuh Jasa Layout, Desain Cover, ISBN, atau Paket Terbit Lengkap?
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-2.5 leading-relaxed">
+                        Bagi Anda yang naskahnya masih berbentuk file Word mentah dan membutuhkan layanan pracetak maupun paket penerbitan buku ber-ISBN resmi (Anggota IKAPI), kami telah menyediakan halaman khusus dengan rincian paket lengkap.
+                    </p>
+
+                    <ul class="mt-5 space-y-2.5 text-xs sm:text-sm text-slate-700 font-medium">
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-circle-check text-brand-600"></i>
+                            <span>Paket Penerbitan Buku Ber-ISBN Perpusnas RI</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-circle-check text-brand-600"></i>
+                            <span>Jasa Layout / Tata Letak Halaman Profesional</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-circle-check text-brand-600"></i>
+                            <span>Desain Cover Eksklusif &amp; Proofreading</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i class="fa-solid fa-circle-check text-brand-600"></i>
+                            <span>Konversi Karya Ilmiah (Skripsi/Tesis/Disertasi) Jadi Buku</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="relative z-10 mt-7 pt-5 border-t border-slate-100">
+                    <a href="https://paket.kmedia.id/" target="_blank" rel="noopener noreferrer"
+                       class="w-full py-3.5 px-5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-brand-600/20 flex items-center justify-center gap-2.5 transition-all active:scale-95">
+                        <span>Kunjungi paket.kmedia.id</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                    <p class="text-[11px] text-center text-slate-400 mt-2">
+                        Klik tombol di atas untuk melihat informasi layanan pracetak &amp; paket penerbitan Klik Media
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- INFORMASI PEMBAYARAN RESMI BANNER -->
+        <div class="mt-8 bg-white rounded-3xl border-2 border-amber-300/80 shadow-md p-6 sm:p-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="flex items-start gap-4">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-100 text-amber-700 border border-amber-300 flex items-center justify-center shrink-0 text-xl sm:text-2xl">
+                    <i class="fa-solid fa-shield-check"></i>
+                </div>
+                <div>
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-amber-100 text-amber-800 mb-1.5">
+                        <i class="fa-solid fa-lock"></i> Informasi Pembayaran Resmi
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-extrabold text-slate-900">
+                        Rekening Resmi Klik Media Penerbit dan Percetakan
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
+                        Demi keamanan transaksi Anda, <strong>pembayaran hanya dilakukan melalui nomor rekening BRI 632101012714532 atas nama Abdul Muis</strong>. Kami tidak bertanggung jawab atas transaksi di luar nomor rekening tersebut.
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-auto shrink-0 bg-slate-50 border border-slate-200 rounded-2xl p-4 flex items-center justify-between gap-5">
+                <div>
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-brand-700 block">Bank Rakyat Indonesia (BRI)</span>
+                    <span class="font-mono font-extrabold text-lg sm:text-xl text-slate-900 tracking-wider block mt-0.5">632101012714532</span>
+                    <span class="text-xs font-bold text-slate-600 block">a.n. Abdul Muis</span>
+                </div>
+                <button type="button" onclick="copyRekening('btn-copy-rek-main')" id="btn-copy-rek-main"
+                    class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm shadow-sm flex items-center gap-2 transition active:scale-95 no-print">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Salin No. Rek</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Sesuai Identitas Klik Media) -->
+    <footer class="bg-slate-900 text-slate-300 pt-12 pb-8 border-t border-slate-800 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-slate-800">
+                <!-- Col 1: Brand Info & Pembayaran -->
+                <div class="md:col-span-5 space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-amber-300">
+                            <i class="fa-solid fa-book-open-reader text-lg"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-lg text-white leading-none">KLIK MEDIA</h4>
+                            <span class="text-xs text-amber-400 font-semibold">Penerbit dan Percetakan (Anggota IKAPI)</span>
+                        </div>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md">
+                        Mitra terpercaya bagi dosen, guru, peneliti, mahasiswa, dan penulis Indonesia untuk menerbitkan dan mencetak buku berkualitas tinggi dengan harga bersahabat.
+                    </p>
+                    <div class="pt-1">
+                        <div class="inline-block bg-slate-800/90 border border-slate-700 rounded-xl px-3.5 py-2 text-xs text-slate-300">
+                            <span class="text-amber-400 font-bold"><i class="fa-solid fa-building-columns mr-1"></i> Rekening Resmi:</span>
+                            BRI <strong class="text-white font-mono">632101012714532</strong> a.n. <strong class="text-white">Abdul Muis</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Col 2: Kontak WhatsApp & Media Sosial -->
+                <div class="md:col-span-4 space-y-2.5">
+                    <h5 class="text-xs font-extrabold uppercase tracking-wider text-white">Hubungi Layanan Konsumen</h5>
+                    <div class="space-y-2 text-xs sm:text-sm">
+                        <a href="https://wa.me/6281336335612" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 text-emerald-400 hover:text-emerald-300 font-bold">
+                            <i class="fa-brands fa-whatsapp text-lg w-5 text-center"></i>
+                            <span>0813-3633-5612 (WhatsApp Utama)</span>
+                        </a>
+                        <a href="https://wa.me/6285334150580" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 text-slate-300 hover:text-white font-semibold">
+                            <i class="fa-solid fa-phone text-sm text-slate-400 w-5 text-center"></i>
+                            <span>0853-3415-0580 (Kontak Alternatif)</span>
+                        </a>
+                        <a href="https://www.instagram.com/kmedia.id/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 text-pink-400 hover:text-pink-300 font-bold">
+                            <i class="fa-brands fa-instagram text-lg w-5 text-center"></i>
+                            <span>@kmedia.id (Instagram Resmi)</span>
+                        </a>
+                        <a href="https://paket.kmedia.id/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 text-sky-400 hover:text-sky-300 font-semibold">
+                            <i class="fa-solid fa-globe text-sm w-5 text-center"></i>
+                            <span>paket.kmedia.id (Paket Penerbitan)</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Col 3: Alamat Kantor -->
+                <div class="md:col-span-3 space-y-2.5">
+                    <h5 class="text-xs font-extrabold uppercase tracking-wider text-white">Alamat Kantor</h5>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed flex items-start gap-2.5">
+                        <i class="fa-solid fa-location-dot text-amber-400 mt-1 shrink-0"></i>
+                        <span>RT 10 RW 04 Kebonsari Barat, Yosowilangun, Lumajang, Jawa Timur</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+                <p>&copy; 2026 Klik Media Penerbit dan Percetakan. Hak Cipta Dilindungi.</p>
+                <p>Anggota Resmi Ikatan Penerbit Indonesia (IKAPI)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Data Paket Halaman (Paket 1 - Paket 12)
+        const packagesData = [];
+        for (let i = 1; i <= 12; i++) {
+            const minPage = (i === 1) ? 60 : 60 + (i - 1) * 20 + 1;
+            const maxPage = 60 + i * 20;
+            packagesData.push({
+                paket: i,
+                minPage: minPage,
+                maxPage: maxPage,
+                label: `${minPage}–${maxPage}`,
+                // Harga A5: Paket 1 mulai 27.500 (2-4 eks), naik 2.500 per paket
+                a5: {
+                    t2_4: 27500 + (i - 1) * 2500,
+                    t5_9: 24500 + (i - 1) * 2500,
+                    t10_25: 21500 + (i - 1) * 2500,
+                    t26_50: 21000 + (i - 1) * 2500,
+                    t51_plus: 20500 + (i - 1) * 2500,
+                    hardcover: 15000,
+                    setup1Eks: 5000
+                },
+                // Harga UNESCO/B5: Paket 1 mulai 32.500 (2-4 eks), naik 3.500 per paket
+                unesco: {
+                    t2_4: 32500 + (i - 1) * 3500,
+                    t5_9: 30000 + (i - 1) * 3500,
+                    t10_25: 27000 + (i - 1) * 3500,
+                    t26_50: 26500 + (i - 1) * 3500,
+                    t51_plus: 26000 + (i - 1) * 3500,
+                    hardcover: 18000,
+                    setup1Eks: 7500
+                }
+            });
+        }
+
+        // State Kalkulator
+        let currentState = {
+            size: 'A5', // 'A5' atau 'UNESCO'
+            pages: 80,
+            qty: 3
+        };
+
+        // Helper Format Rupiah
+        function formatRp(num) {
+            return 'Rp' + Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Render Tabel Harga A5 & UNESCO/B5 serta Dropdown Paket
+        function initTablesAndSelect() {
+            const tbodyA5 = document.getElementById('tbody-a5');
+            const tbodyUnesco = document.getElementById('tbody-unesco');
+            const selectPaket = document.getElementById('select-paket');
+
+            let htmlA5 = '';
+            let htmlUnesco = '';
+            let optionsHtml = '';
+
+            packagesData.forEach(item => {
+                // Opsi Dropdown
+                optionsHtml += `<option value="${item.maxPage}">Paket ${item.paket} (${item.label} Halaman)</option>`;
+
+                // Baris A5
+                htmlA5 += `
+                    <tr id="row-a5-${item.paket}" onclick="selectRowFromTable('A5', ${item.maxPage})" class="table-row-hover cursor-pointer" title="Klik untuk hitung Paket ${item.paket} A5 di kalkulator">
+                        <td class="py-3 px-4 text-center font-extrabold text-slate-900 bg-slate-50/70">${item.paket}</td>
+                        <td class="py-3 px-4 font-bold text-slate-800">${item.label} Hlm</td>
+                        <td class="py-3 px-4 font-extrabold text-brand-700 bg-brand-50/40">${formatRp(item.a5.t2_4)}</td>
+                        <td class="py-3 px-4 font-semibold">${formatRp(item.a5.t5_9)}</td>
+                        <td class="py-3 px-4 font-semibold">${formatRp(item.a5.t10_25)}</td>
+                        <td class="py-3 px-4 font-semibold">${formatRp(item.a5.t26_50)}</td>
+                        <td class="py-3 px-4 font-bold text-emerald-700">${formatRp(item.a5.t51_plus)}</td>
+                        <td class="py-3 px-4 text-center text-slate-500 font-semibold">+${formatRp(item.a5.hardcover)}</td>
+                    </tr>
+                `;
+
+                // Baris UNESCO
+                htmlUnesco += `
+                    <tr id="row-unesco-${item.paket}" onclick="selectRowFromTable('UNESCO', ${item.maxPage})" class="table-row-hover cursor-pointer" title="Klik untuk hitung Paket ${item.paket} UNESCO di kalkulator">
+                        <td class="py-3 px-4 text-center font-extrabold text-slate-900 bg-slate-50/70">${item.paket}</td>
+                        <td class="py-3 px-4 font-bold text-slate-800">${item.label} Hlm</td>
+                        <td class="py-3 px-4 font-extrabold text-amber-800 bg-amber-50/40">${formatRp(item.unesco.t2_4)}</td>
+                        <td class="py-3 px-4 font-semibold">${formatRp(item.unesco.t5_9)}</td>
+                        <td class="py-3 px-4 font-semibold">${formatRp(item.unesco.t10_25)}</td>
+                        <td class="py-3 px-4 font-semibold">${formatRp(item.unesco.t26_50)}</td>
+                        <td class="py-3 px-4 font-bold text-emerald-700">${formatRp(item.unesco.t51_plus)}</td>
+                        <td class="py-3 px-4 text-center text-slate-500 font-semibold">+${formatRp(item.unesco.hardcover)}</td>
+                    </tr>
+                `;
+            });
+
+            tbodyA5.innerHTML = htmlA5;
+            tbodyUnesco.innerHTML = htmlUnesco;
+            selectPaket.innerHTML = optionsHtml;
+        }
+
+        // Pilih Ukuran Buku
+        function setBookSize(size) {
+            currentState.size = size;
+            const btnA5 = document.getElementById('btn-size-a5');
+            const btnUnesco = document.getElementById('btn-size-unesco');
+            const iconA5 = document.getElementById('icon-size-a5');
+            const iconUnesco = document.getElementById('icon-size-unesco');
+            const hcLabel = document.getElementById('label-hardcover-price');
+
+            if (size === 'A5') {
+                btnA5.className = "text-left p-4 rounded-xl border-2 border-brand-600 bg-brand-50/60 transition-all flex items-start justify-between relative";
+                btnUnesco.className = "text-left p-4 rounded-xl border-2 border-slate-200 hover:border-slate-300 bg-white transition-all flex items-start justify-between relative";
+                iconA5.className = "fa-solid fa-circle-check text-brand-600 text-lg";
+                iconUnesco.className = "fa-regular fa-circle text-slate-300 text-lg";
+                hcLabel.textContent = "+Rp15.000 / eks";
+            } else {
+                btnUnesco.className = "text-left p-4 rounded-xl border-2 border-brand-600 bg-brand-50/60 transition-all flex items-start justify-between relative";
+                btnA5.className = "text-left p-4 rounded-xl border-2 border-slate-200 hover:border-slate-300 bg-white transition-all flex items-start justify-between relative";
+                iconUnesco.className = "fa-solid fa-circle-check text-brand-600 text-lg";
+                iconA5.className = "fa-regular fa-circle text-slate-300 text-lg";
+                hcLabel.textContent = "+Rp18.000 / eks";
+            }
+            calculateAll();
+        }
+
+        // Sinkronisasi Input Halaman
+        function onPagesInputChange(val) {
+            let pages = parseInt(val, 10);
+            if (isNaN(pages) || pages < 1) pages = 60;
+            currentState.pages = pages;
+
+            document.getElementById('input-pages').value = pages;
+            const slider = document.getElementById('slider-pages');
+            slider.value = Math.min(300, Math.max(60, pages));
+
+            // Sinkronisasi ke dropdown jika <= 300
+            const detected = getPackageInfo(pages);
+            const selectEl = document.getElementById('select-paket');
+            if (detected.paket <= 12) {
+                selectEl.value = detected.maxPage;
+            }
+            calculateAll();
+        }
+
+        function onPaketSelectChange(maxPageVal) {
+            const pages = parseInt(maxPageVal, 10);
+            currentState.pages = pages;
+            document.getElementById('input-pages').value = pages;
+            document.getElementById('slider-pages').value = pages;
+            calculateAll();
+        }
+
+        // Sinkronisasi Kuantitas
+        function onQtyInputChange(val) {
+            let qty = parseInt(val, 10);
+            if (isNaN(qty) || qty < 1) qty = 1;
+            currentState.qty = qty;
+            calculateAll();
+        }
+
+        function adjustQty(delta) {
+            let newQty = currentState.qty + delta;
+            if (newQty < 1) newQty = 1;
+            currentState.qty = newQty;
+            document.getElementById('input-qty').value = newQty;
+            calculateAll();
+        }
+
+        function setExactQty(qty) {
+            currentState.qty = qty;
+            document.getElementById('input-qty').value = qty;
+            calculateAll();
+        }
+
+        // Deteksi Paket berdasarkan Jumlah Halaman (mendukung > 300 halaman juga)
+        function getPackageInfo(pages) {
+            if (pages <= 80) {
+                return packagesData[0];
+            }
+            const extraPages = pages - 80;
+            const extraSteps = Math.ceil(extraPages / 20);
+            const paketNum = 1 + extraSteps;
+
+            if (paketNum <= 12) {
+                return packagesData[paketNum - 1];
+            } else {
+                // Jika > 300 halaman, hitung kelipatan otomatis
+                const minP = 60 + (paketNum - 1) * 20 + 1;
+                const maxP = 60 + paketNum * 20;
+                return {
+                    paket: paketNum,
+                    minPage: minP,
+                    maxPage: maxP,
+                    label: `${minP}–${maxP}`,
+                    a5: {
+                        t2_4: 27500 + (paketNum - 1) * 2500,
+                        t5_9: 24500 + (paketNum - 1) * 2500,
+                        t10_25: 21500 + (paketNum - 1) * 2500,
+                        t26_50: 21000 + (paketNum - 1) * 2500,
+                        t51_plus: 20500 + (paketNum - 1) * 2500,
+                        hardcover: 15000,
+                        setup1Eks: 5000
+                    },
+                    unesco: {
+                        t2_4: 32500 + (paketNum - 1) * 3500,
+                        t5_9: 30000 + (paketNum - 1) * 3500,
+                        t10_25: 27000 + (paketNum - 1) * 3500,
+                        t26_50: 26500 + (paketNum - 1) * 3500,
+                        t51_plus: 26000 + (paketNum - 1) * 3500,
+                        hardcover: 18000,
+                        setup1Eks: 7500
+                    }
+                };
+            }
+        }
+
+        // Kalkulasi Utama
+        function calculateAll() {
+            const pkg = getPackageInfo(currentState.pages);
+            const qty = currentState.qty;
+            const isA5 = currentState.size === 'A5';
+            const priceTable = isA5 ? pkg.a5 : pkg.unesco;
+
+            // Update Badge Paket
+            document.getElementById('badge-detected-paket').textContent = `Paket ${pkg.paket} (${pkg.label} Halaman)`;
+
+            // Tentukan Tier Kuantitas & Harga Dasar per Buku
+            let unitPrice = priceTable.t2_4;
+            let tierName = '2–4 Eks';
+            let setupFee = 0;
+
+            if (qty === 1) {
+                unitPrice = priceTable.t2_4;
+                setupFee = priceTable.setup1Eks;
+                tierName = 'Cetak Satuan (1 Eks)';
+            } else if (qty >= 2 && qty <= 4) {
+                unitPrice = priceTable.t2_4;
+                tierName = 'Kategori: 2–4 Eks';
+            } else if (qty >= 5 && qty <= 9) {
+                unitPrice = priceTable.t5_9;
+                tierName = 'Kategori: 5–9 Eks';
+            } else if (qty >= 10 && qty <= 25) {
+                unitPrice = priceTable.t10_25;
+                tierName = 'Kategori: 10–25 Eks';
+            } else if (qty >= 26 && qty <= 50) {
+                unitPrice = priceTable.t26_50;
+                tierName = 'Kategori: 26–50 Eks';
+            } else {
+                unitPrice = priceTable.t51_plus;
+                tierName = 'Harga Grosir (> 50 Eks)';
+            }
+
+            document.getElementById('badge-detected-tier').textContent = tierName;
+
+            // Highlight baris tabel yang aktif
+            document.querySelectorAll('#tbody-a5 tr, #tbody-unesco tr').forEach(tr => tr.classList.remove('active-row'));
+            if (pkg.paket <= 12) {
+                const activeRowId = isA5 ? `row-a5-${pkg.paket}` : `row-unesco-${pkg.paket}`;
+                const rowEl = document.getElementById(activeRowId);
+                if (rowEl) rowEl.classList.add('active-row');
+            }
+
+            // Smart Tips untuk Konsumen (Mendorong tambah kuantitas)
+            const tipBox = document.getElementById('smart-tip-box');
+            const tipText = document.getElementById('smart-tip-text');
+            if (qty === 1) {
+                tipBox.classList.remove('hidden');
+                tipText.innerHTML = `<strong>Tips Hemat:</strong> Cetak 1 eks dikenakan biaya setup mesin <strong>+${formatRp(setupFee)}</strong>. Jika cetak <strong>2 eks</strong>, Anda bebas biaya setup dan harga jatuh lebih hemat per bukunya! <button type="button" onclick="setExactQty(2)" class="underline font-extrabold text-brand-700 ml-1">Ubah jadi 2 Eks</button>`;
+            } else if (qty === 4) {
+                const diffPerBook = priceTable.t2_4 - priceTable.t5_9;
+                tipBox.classList.remove('hidden');
+                tipText.innerHTML = `<strong>Tips Hemat:</strong> Tambah <strong>1 eks lagi (jadi 5 eks)</strong> agar harga cetak turun <strong>${formatRp(diffPerBook)}/buku</strong> (jadi ${formatRp(priceTable.t5_9)}/eks)! <button type="button" onclick="setExactQty(5)" class="underline font-extrabold text-brand-700 ml-1">Ubah jadi 5 Eks</button>`;
+            } else if (qty === 9) {
+                const diffPerBook = priceTable.t5_9 - priceTable.t10_25;
+                tipBox.classList.remove('hidden');
+                tipText.innerHTML = `<strong>Tips Hemat:</strong> Tambah <strong>1 eks lagi (jadi 10 eks)</strong> agar harga cetak turun <strong>${formatRp(diffPerBook)}/buku</strong> (jadi ${formatRp(priceTable.t10_25)}/eks)! <button type="button" onclick="setExactQty(10)" class="underline font-extrabold text-brand-700 ml-1">Ubah jadi 10 Eks</button>`;
+            } else {
+                tipBox.classList.add('hidden');
+            }
+
+            // Cek Hard Cover
+            const isHardCover = document.querySelector('input[name="coverType"]:checked').value === 'hard';
+            const hardcoverFeeTotal = isHardCover ? (priceTable.hardcover * qty) : 0;
+
+            // Cek Promo Sertifikat HKI (Rp500.000)
+            const addonHkiEl = document.getElementById('addon-hki');
+            const isHkiChecked = addonHkiEl ? addonHkiEl.checked : false;
+            const hkiFee = isHkiChecked ? 500000 : 0;
+
+            // Total Biaya
+            const basePrintingCost = (unitPrice * qty) + setupFee;
+            const grandTotal = basePrintingCost + hardcoverFeeTotal + hkiFee;
+
+            // Update Elemen Rincian (Receipt)
+            document.getElementById('sum-size').textContent = isA5 ? 'A5 (14,8 x 21 cm)' : 'UNESCO (15,5 x 23 cm) / B5';
+            document.getElementById('sum-pages').textContent = `${currentState.pages} Hlm (Paket ${pkg.paket}: ${pkg.label} Hlm)`;
+            document.getElementById('sum-qty').textContent = `${qty} Eksemplar`;
+            document.getElementById('sum-unit-price').textContent = `${formatRp(unitPrice)} / eks`;
+
+            // Baris Setup Fee 1 Eks
+            const rowSetup = document.getElementById('row-setup-fee');
+            if (setupFee > 0) {
+                rowSetup.classList.remove('hidden');
+                document.getElementById('sum-setup-fee').textContent = `+${formatRp(setupFee)}`;
+            } else {
+                rowSetup.classList.add('hidden');
+            }
+
+            // Baris Hard Cover
+            const rowHc = document.getElementById('row-hardcover-fee');
+            if (hardcoverFeeTotal > 0) {
+                rowHc.classList.remove('hidden');
+                document.getElementById('sum-hardcover-fee').textContent = `+${formatRp(hardcoverFeeTotal)} (${qty} x ${formatRp(priceTable.hardcover)})`;
+            } else {
+                rowHc.classList.add('hidden');
+            }
+
+            // Baris Promo HKI
+            const rowHki = document.getElementById('row-hki-fee');
+            if (isHkiChecked) {
+                rowHki.classList.remove('hidden');
+            } else {
+                rowHki.classList.add('hidden');
+            }
+
+            // Update Total Harga
+            document.getElementById('sum-total').textContent = formatRp(grandTotal);
+
+            // Susun Link Pesan WhatsApp Otomatis
+            const customTitle = document.getElementById('input-title').value.trim();
+            const coverLabel = isHardCover ? `Hard Cover (+${formatRp(priceTable.hardcover)}/eks)` : 'Soft Cover (Standar)';
+            const sizeLabel = isA5 ? 'A5 (14,8 x 21 cm)' : 'UNESCO (15,5 x 23 cm) / B5';
+
+            let waLines = [
+                'Halo Admin *Klik Media*, saya ingin memesan / konsultasi cetak buku dengan rincian simulasi berikut:',
+                ''
+            ];
+            if (customTitle) {
+                waLines.push(`• *Pemesan / Judul:* ${customTitle}`);
+            }
+            waLines.push(`• *Ukuran Buku:* ${sizeLabel}`);
+            waLines.push(`• *Jumlah Halaman:* ${currentState.pages} Halaman (Paket ${pkg.paket}: ${pkg.label} Hlm)`);
+            waLines.push(`• *Jumlah Cetak:* ${qty} Eksemplar (${tierName})`);
+            waLines.push(`• *Jenis Cover:* ${coverLabel}`);
+            waLines.push(`• *Harga Cetak Dasar:* ${formatRp(unitPrice)} / eks`);
+            if (setupFee > 0) {
+                waLines.push(`• *Biaya Setup 1 Eks:* +${formatRp(setupFee)}`);
+            }
+            if (hardcoverFeeTotal > 0) {
+                waLines.push(`• *Total Tambahan Hard Cover:* +${formatRp(hardcoverFeeTotal)}`);
+            }
+            if (isHkiChecked) {
+                waLines.push(`• *Tambahan Promo Sertifikat HKI:* +Rp500.000`);
+            }
+            waLines.push('');
+            waLines.push(`*Total Estimasi Biaya:* *${formatRp(grandTotal)}* _(belum termasuk ongkir)_`);
+            waLines.push(`*Rekening Pembayaran Resmi:* BRI 632101012714532 a.n. Abdul Muis`);
+            waLines.push('');
+            waLines.push('Mohon informasi langkah selanjutnya untuk pengiriman file naskah. Terima kasih.');
+
+            const waUrl = `https://wa.me/6281336335612?text=${encodeURIComponent(waLines.join('\n'))}`;
+            document.getElementById('btn-wa-order').href = waUrl;
+        }
+
+        // Fungsi Salin Nomor Rekening ke Clipboard
+        function copyRekening(btnId) {
+            const rekNumber = '632101012714532';
+            const tempInput = document.createElement('textarea');
+            tempInput.value = rekNumber;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                const btnEl = document.getElementById(btnId);
+                if (btnEl) {
+                    const originalHtml = btnEl.innerHTML;
+                    btnEl.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i> <span>Tersalin!</span>';
+                    setTimeout(() => {
+                        btnEl.innerHTML = originalHtml;
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Gagal menyalin nomor rekening', err);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // Klik Baris pada Tabel Harga untuk Langsung Muat ke Kalkulator
+        function selectRowFromTable(size, maxPage) {
+            setBookSize(size);
+            onPaketSelectChange(maxPage);
+            const calcSection = document.getElementById('kalkulator');
+            if (calcSection) {
+                calcSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Filter Tab Tabel Harga (Semua / A5 / UNESCO)
+        function switchTableTab(tab) {
+            const contA5 = document.getElementById('container-table-a5');
+            const contUnesco = document.getElementById('container-table-unesco');
+            const btnAll = document.getElementById('tab-all');
+            const btnA5 = document.getElementById('tab-a5');
+            const btnUnesco = document.getElementById('tab-unesco');
+
+            const activeClass = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold bg-white text-brand-700 shadow-sm transition";
+            const inactiveClass = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition";
+
+            if (tab === 'ALL') {
+                contA5.classList.remove('hidden');
+                contUnesco.classList.remove('hidden');
+                btnAll.className = activeClass;
+                btnA5.className = inactiveClass;
+                btnUnesco.className = inactiveClass;
+            } else if (tab === 'A5') {
+                contA5.classList.remove('hidden');
+                contUnesco.classList.add('hidden');
+                btnAll.className = inactiveClass;
+                btnA5.className = activeClass;
+                btnUnesco.className = inactiveClass;
+            } else if (tab === 'UNESCO') {
+                contA5.classList.add('hidden');
+                contUnesco.classList.remove('hidden');
+                btnAll.className = inactiveClass;
+                btnA5.className = inactiveClass;
+                btnUnesco.className = activeClass;
+            }
+        }
+
+        // Fungsi Bundling Cepat Promo HKI dari Banner Bawah ke Kalkulator
+        function bundleHkiToCalculator() {
+            const addonHkiEl = document.getElementById('addon-hki');
+            if (addonHkiEl) {
+                addonHkiEl.checked = true;
+                calculateAll();
+                document.getElementById('kalkulator').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Inisialisasi saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            initTablesAndSelect();
+            setBookSize('A5');
+            onPagesInputChange(80);
+            setExactQty(3);
+        });
+    </script>
+</body>
+</html>
