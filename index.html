@@ -336,7 +336,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
                         <!-- Input Angka Halaman -->
                         <div class="sm:col-span-5 relative">
-                            <input type="number" id="input-pages" min="40" max="600" value="80" oninput="onPagesInputChange(this.value)"
+                            <input type="number" id="input-pages" min="60" max="1000" value="80" oninput="onPagesInputChange(this.value)"
                                 class="w-full pl-4 pr-16 py-2.5 rounded-xl border border-slate-300 font-bold text-slate-900 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
                             <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Halaman</span>
                         </div>
@@ -350,16 +350,36 @@
                         </div>
                     </div>
 
-                    <!-- Slider Halaman -->
+                    <!-- Slider Halaman (60 s.d. 1.000 Halaman) -->
                     <div class="mt-3">
-                        <input type="range" id="slider-pages" min="60" max="300" step="1" value="80" oninput="onPagesInputChange(this.value)"
+                        <input type="range" id="slider-pages" min="60" max="1000" step="1" value="80" oninput="onPagesInputChange(this.value)"
                             class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600">
                         <div class="flex justify-between text-[11px] font-medium text-slate-400 mt-1">
-                            <span>60 Hlm (Paket 1)</span>
-                            <span>140 Hlm (Paket 4)</span>
-                            <span>220 Hlm (Paket 8)</span>
+                            <span>60 Hlm</span>
                             <span>300 Hlm (Paket 12)</span>
+                            <span>600 Hlm</span>
+                            <span>1.000 Hlm</span>
                         </div>
+                    </div>
+
+                    <!-- Tombol Pintasan Halaman (Termasuk Buku Tebal 450, 600, 900 Hlm) -->
+                    <div class="mt-3">
+                        <span class="text-[11px] font-semibold text-slate-400 block mb-1.5">Pilih Cepat Ketebalan Naskah:</span>
+                        <div class="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
+                            <button type="button" onclick="onPagesInputChange(80)" class="py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">80 Hlm</button>
+                            <button type="button" onclick="onPagesInputChange(120)" class="py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">120 Hlm</button>
+                            <button type="button" onclick="onPagesInputChange(200)" class="py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">200 Hlm</button>
+                            <button type="button" onclick="onPagesInputChange(300)" class="py-1.5 px-2 rounded-lg text-xs font-bold border border-slate-200 bg-slate-50 hover:bg-brand-50 hover:border-brand-300 text-slate-700 transition">300 Hlm</button>
+                            <button type="button" onclick="onPagesInputChange(450)" class="py-1.5 px-2 rounded-lg text-xs font-bold border border-indigo-200 bg-indigo-50/60 hover:bg-indigo-100 text-indigo-800 transition">450 Hlm</button>
+                            <button type="button" onclick="onPagesInputChange(600)" class="py-1.5 px-2 rounded-lg text-xs font-bold border border-indigo-200 bg-indigo-50/60 hover:bg-indigo-100 text-indigo-800 transition">600 Hlm</button>
+                            <button type="button" onclick="onPagesInputChange(900)" class="py-1.5 px-2 rounded-lg text-xs font-bold border border-indigo-200 bg-indigo-50/60 hover:bg-indigo-100 text-indigo-800 transition">900 Hlm</button>
+                        </div>
+                    </div>
+
+                    <!-- Rekomendasi Teknis Otomatis untuk Buku Tebal (> 350 Halaman) -->
+                    <div id="thick-book-tip-box" class="mt-3 hidden rounded-xl p-3 text-xs flex items-start gap-2.5 border">
+                        <i id="thick-book-tip-icon" class="fa-solid fa-book-medical text-base mt-0.5 shrink-0"></i>
+                        <div id="thick-book-tip-text" class="leading-relaxed"></div>
                     </div>
                 </div>
 
@@ -379,7 +399,7 @@
                             <i class="fa-solid fa-minus text-xs"></i>
                         </button>
                         <div class="relative flex-1">
-                            <input type="number" id="input-qty" min="1" max="2000" value="3" oninput="onQtyInputChange(this.value)"
+                            <input type="number" id="input-qty" min="1" max="5000" value="3" oninput="onQtyInputChange(this.value)"
                                 class="w-full text-center py-2.5 px-4 rounded-xl border border-slate-300 font-extrabold text-lg text-slate-900 focus:ring-2 focus:ring-brand-500 outline-none">
                             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">Eks</span>
                         </div>
@@ -480,7 +500,11 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-400">Ketebalan Naskah:</span>
-                                <span id="sum-pages" class="font-bold text-amber-300">80 Hlm (Paket 1)</span>
+                                <span id="sum-pages" class="font-bold text-amber-300 text-right">80 Hlm (Paket 1)</span>
+                            </div>
+                            <div id="row-extra-pages-breakdown" class="hidden flex justify-between text-xs bg-indigo-500/15 border border-indigo-400/30 rounded-lg px-2.5 py-1.5 text-indigo-200">
+                                <span id="label-extra-pages-breakdown">Rincian Tarif (&gt;300 Hlm):</span>
+                                <span id="sum-extra-pages-breakdown" class="font-bold text-right">Paket 12 + Ekstra</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-slate-400">Jumlah Cetak:</span>
@@ -768,6 +792,35 @@
                     <span class="text-[11px] font-bold text-slate-500 shrink-0">*Harga belum termasuk ongkos kirim</span>
                 </div>
             </div>
+
+            <!-- BANNER KETENTUAN NASKAH TEBAL (> 300 HALAMAN HINGGA 1.000 HALAMAN) -->
+            <div class="mt-8 rounded-2xl bg-gradient-to-r from-slate-900 via-brand-900 to-indigo-950 text-white p-5 sm:p-6 shadow-md border border-brand-700/50 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5">
+                <div class="flex items-start gap-4">
+                    <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-amber-400/20 border border-amber-400/40 text-amber-300 flex items-center justify-center shrink-0 text-lg sm:text-xl mt-0.5">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-amber-400 text-slate-950 mb-1.5">
+                            Ketentuan Naskah Tebal (&gt; 300 Halaman)
+                        </div>
+                        <h4 class="text-base sm:text-lg font-extrabold text-white">
+                            Punya Naskah Buku 400, 600, hingga 1.000 Halaman?
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-200 mt-1 leading-relaxed">
+                            Untuk buku dengan ketebalan di atas 300 halaman (hingga 600–1.000 halaman), harga dihitung secara transparan dari tarif <strong>Paket 12 (281–300 halaman)</strong> ditambah tarif per kelipatan 20 halaman:
+                            <span class="text-amber-300 font-bold">Ukuran A6 (+Rp2.000/20 hlm)</span>,
+                            <span class="text-amber-300 font-bold">Ukuran A5 (+Rp2.500/20 hlm)</span>,
+                            <span class="text-amber-300 font-bold">Ukuran UNESCO/B5 (+Rp3.500/20 hlm)</span>, dan
+                            <span class="text-amber-300 font-bold">Ukuran A4 (+Rp4.000/20 hlm)</span>.
+                            Gunakan Kalkulator Simulasi di atas untuk menghitung otomatis.
+                        </p>
+                    </div>
+                </div>
+                <a href="#kalkulator" onclick="onPagesInputChange(600)" class="shrink-0 px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-sm transition flex items-center gap-2 no-print">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Coba Simulasi 600 Hlm</span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -1001,56 +1054,62 @@
             const minPage = (paketNum === 1) ? 60 : 60 + (paketNum - 1) * 20 + 1;
             const maxPage = 60 + paketNum * 20;
             const step = paketNum - 1;
+            const extraBlocksAbove12 = Math.max(0, paketNum - 12);
 
             return {
                 paket: paketNum,
                 minPage: minPage,
                 maxPage: maxPage,
+                extraBlocks: extraBlocksAbove12,
                 label: `${minPage}–${maxPage}`,
-                // Harga A6 (10,5 x 14,5 cm): Paket 1 mulai 19.500 (2-4 eks), naik 2.000 per paket
+                // Harga A6 (10,5 x 14,5 cm): Paket 1 mulai 19.500 (2-4 eks), naik 2.000 per paket (20 hlm)
                 a6: {
                     t2_4: 19500 + step * 2000,
                     t5_9: 17500 + step * 2000,
                     t10_25: 15500 + step * 2000,
                     t26_50: 15000 + step * 2000,
                     t51_plus: 14500 + step * 2000,
+                    increment: 2000,
                     hardcover: 12000,
                     setup1Eks: 3500
                 },
-                // Harga A5 (14,8 x 21 cm): Paket 1 mulai 27.500 (2-4 eks), naik 2.500 per paket
+                // Harga A5 (14,8 x 21 cm): Paket 1 mulai 27.500 (2-4 eks), naik 2.500 per paket (20 hlm)
                 a5: {
                     t2_4: 27500 + step * 2500,
                     t5_9: 24500 + step * 2500,
                     t10_25: 21500 + step * 2500,
                     t26_50: 21000 + step * 2500,
                     t51_plus: 20500 + step * 2500,
+                    increment: 2500,
                     hardcover: 15000,
                     setup1Eks: 5000
                 },
-                // Harga UNESCO/B5 (15,5 x 23 cm): Paket 1 mulai 32.500 (2-4 eks), naik 3.500 per paket
+                // Harga UNESCO/B5 (15,5 x 23 cm): Paket 1 mulai 32.500 (2-4 eks), naik 3.500 per paket (20 hlm)
                 unesco: {
                     t2_4: 32500 + step * 3500,
                     t5_9: 30000 + step * 3500,
                     t10_25: 27000 + step * 3500,
                     t26_50: 26500 + step * 3500,
                     t51_plus: 26000 + step * 3500,
+                    increment: 3500,
                     hardcover: 18000,
                     setup1Eks: 7500
                 },
-                // Harga A4 (21 x 29,5 cm): Paket 1 mulai 36.000 (2-4 eks), naik 4.000 per paket
+                // Harga A4 (21 x 29,5 cm): Paket 1 mulai 36.000 (2-4 eks), naik 4.000 per paket (20 hlm)
                 a4: {
                     t2_4: 36000 + step * 4000,
                     t5_9: 33500 + step * 4000,
                     t10_25: 30500 + step * 4000,
                     t26_50: 30000 + step * 4000,
                     t51_plus: 29500 + step * 4000,
+                    increment: 4000,
                     hardcover: 22000,
                     setup1Eks: 7500
                 }
             };
         }
 
-        // Data Paket Halaman (Paket 1 - Paket 12)
+        // Data Paket Halaman Tabel Utama (Paket 1 - Paket 12: 60 s/d 300 Halaman)
         const packagesData = [];
         for (let i = 1; i <= 12; i++) {
             packagesData.push(buildPackageObject(i));
@@ -1084,7 +1143,7 @@
             return 'A5 (14,8 x 21 cm)';
         }
 
-        // Render Tabel Harga A5, UNESCO/B5, A6, A4 serta Dropdown Paket
+        // Render Tabel Harga A5, UNESCO/B5, A6, A4 serta Dropdown Paket (Termasuk Opsi > 300 Hlm)
         function initTablesAndSelect() {
             const tbodyA5 = document.getElementById('tbody-a5');
             const tbodyUnesco = document.getElementById('tbody-unesco');
@@ -1096,10 +1155,10 @@
             let htmlUnesco = '';
             let htmlA6 = '';
             let htmlA4 = '';
-            let optionsHtml = '';
+            let optionsHtml = '<optgroup label="Paket Standar (60 – 300 Halaman)">';
 
             packagesData.forEach(item => {
-                // Opsi Dropdown
+                // Opsi Dropdown Paket 1 - 12
                 optionsHtml += `<option value="${item.maxPage}">Paket ${item.paket} (${item.label} Halaman)</option>`;
 
                 // Baris A5
@@ -1159,6 +1218,15 @@
                 `;
             });
 
+            optionsHtml += '</optgroup>';
+            optionsHtml += '<optgroup label="Naskah Buku Tebal (> 300 Halaman)">';
+            const thickPresets = [350, 400, 450, 500, 550, 600, 700, 800, 900, 1000];
+            thickPresets.forEach(p => {
+                const extraBlocks = Math.ceil((p - 300) / 20);
+                optionsHtml += `<option value="${p}">Buku Tebal ${p} Hlm (Paket 12 + ${extraBlocks} Blok)</option>`;
+            });
+            optionsHtml += '</optgroup>';
+
             tbodyA5.innerHTML = htmlA5;
             tbodyUnesco.innerHTML = htmlUnesco;
             tbodyA6.innerHTML = htmlA6;
@@ -1197,37 +1265,52 @@
             calculateAll();
         }
 
-        // Sinkronisasi Input Halaman
+        // Sinkronisasi Input Halaman (Mendukung hingga 1.000 halaman)
         function onPagesInputChange(val) {
             let pages = parseInt(val, 10);
             if (isNaN(pages) || pages < 1) pages = 60;
+            if (pages > 1000) pages = 1000;
             currentState.pages = pages;
 
             document.getElementById('input-pages').value = pages;
             const slider = document.getElementById('slider-pages');
-            slider.value = Math.min(300, Math.max(60, pages));
+            slider.value = Math.min(1000, Math.max(60, pages));
 
-            // Sinkronisasi ke dropdown jika <= 300
+            // Sinkronisasi ke dropdown jika cocok
             const detected = getPackageInfo(pages);
             const selectEl = document.getElementById('select-paket');
             if (detected.paket <= 12) {
                 selectEl.value = detected.maxPage;
+            } else {
+                // Cek apakah ada di opsi preset tebal, jika tidak biarkan atau tambahkan opsi dinamis
+                let foundOption = Array.from(selectEl.options).some(opt => parseInt(opt.value, 10) === pages);
+                if (foundOption) {
+                    selectEl.value = pages;
+                } else {
+                    let customOpt = document.getElementById('opt-custom-thick');
+                    if (!customOpt) {
+                        customOpt = document.createElement('option');
+                        customOpt.id = 'opt-custom-thick';
+                        selectEl.appendChild(customOpt);
+                    }
+                    customOpt.value = pages;
+                    customOpt.textContent = `Custom ${pages} Hlm (Paket 12 + ${detected.extraBlocks} Blok: ${detected.label} Hlm)`;
+                    selectEl.value = pages;
+                }
             }
             calculateAll();
         }
 
         function onPaketSelectChange(maxPageVal) {
             const pages = parseInt(maxPageVal, 10);
-            currentState.pages = pages;
-            document.getElementById('input-pages').value = pages;
-            document.getElementById('slider-pages').value = pages;
-            calculateAll();
+            onPagesInputChange(pages);
         }
 
         // Sinkronisasi Kuantitas
         function onQtyInputChange(val) {
             let qty = parseInt(val, 10);
             if (isNaN(qty) || qty < 1) qty = 1;
+            if (qty > 5000) qty = 5000;
             currentState.qty = qty;
             calculateAll();
         }
@@ -1235,6 +1318,7 @@
         function adjustQty(delta) {
             let newQty = currentState.qty + delta;
             if (newQty < 1) newQty = 1;
+            if (newQty > 5000) newQty = 5000;
             currentState.qty = newQty;
             document.getElementById('input-qty').value = newQty;
             calculateAll();
@@ -1246,20 +1330,26 @@
             calculateAll();
         }
 
-        // Deteksi Paket berdasarkan Jumlah Halaman (mendukung > 300 halaman juga)
+        // Deteksi Paket berdasarkan Jumlah Halaman (mendukung Paket 1-12 dan > 300 halaman hingga 1.000 halaman)
         function getPackageInfo(pages) {
             if (pages <= 80) {
                 return packagesData[0];
             }
-            const extraPages = pages - 80;
-            const extraSteps = Math.ceil(extraPages / 20);
-            const paketNum = 1 + extraSteps;
-
+            const paketNum = Math.ceil((pages - 60) / 20);
             if (paketNum <= 12) {
                 return packagesData[paketNum - 1];
             } else {
                 return buildPackageObject(paketNum);
             }
+        }
+
+        // Helper Mendapatkan Harga Tier tertentu dari objek ukuran
+        function getTierUnitPrice(priceObj, qty) {
+            if (qty <= 4) return priceObj.t2_4;
+            if (qty <= 9) return priceObj.t5_9;
+            if (qty <= 25) return priceObj.t10_25;
+            if (qty <= 50) return priceObj.t26_50;
+            return priceObj.t51_plus;
         }
 
         // Kalkulasi Utama
@@ -1269,46 +1359,63 @@
             const sizeCode = currentState.size;
             const priceTable = getSizePriceObj(pkg, sizeCode);
 
-            // Update Badge Paket
-            document.getElementById('badge-detected-paket').textContent = `Paket ${pkg.paket} (${pkg.label} Halaman)`;
+            // Update Badge Paket (Membedakan <= 300 Hlm dan > 300 Hlm secara jelas)
+            const badgePaketEl = document.getElementById('badge-detected-paket');
+            if (pkg.paket <= 12) {
+                badgePaketEl.className = "text-xs font-extrabold px-2.5 py-1 rounded-lg bg-brand-100 text-brand-800";
+                badgePaketEl.textContent = `Paket ${pkg.paket} (${pkg.label} Halaman)`;
+            } else {
+                badgePaketEl.className = "text-xs font-extrabold px-2.5 py-1 rounded-lg bg-indigo-100 text-indigo-900 border border-indigo-300";
+                badgePaketEl.textContent = `Paket 12 (300 Hlm) + Ekstra ${pkg.extraBlocks} Blok (${pkg.label} Hlm)`;
+            }
+
+            // Rekomendasi Teknis Otomatis untuk Buku Tebal (> 350 Halaman)
+            const thickTipBox = document.getElementById('thick-book-tip-box');
+            const thickTipIcon = document.getElementById('thick-book-tip-icon');
+            const thickTipText = document.getElementById('thick-book-tip-text');
+
+            if (currentState.pages > 350 && currentState.pages <= 650) {
+                thickTipBox.className = "mt-3 rounded-xl bg-emerald-50 border border-emerald-300 p-3 text-xs text-emerald-950 flex items-start gap-2.5";
+                thickTipIcon.className = "fa-solid fa-book-open text-emerald-600 text-base mt-0.5 shrink-0";
+                thickTipText.innerHTML = `<strong>Rekomendasi Teknis Buku Tebal (&gt;350 Hlm):</strong> Untuk cetak 1 buku utuh setebal ini, disarankan menggunakan kertas <strong>Bookpaper</strong> (lebih lentur dari HVS) dengan margin dalam (<em>gutter</em>) minimal <strong>2,5 – 2,8 cm</strong> agar nyaman dibuka.`;
+            } else if (currentState.pages > 650) {
+                thickTipBox.className = "mt-3 rounded-xl bg-amber-50 border border-amber-300 p-3 text-xs text-amber-950 flex items-start gap-2.5";
+                thickTipIcon.className = "fa-solid fa-Layer-group fa-swatchbook text-amber-600 text-base mt-0.5 shrink-0";
+                thickTipText.innerHTML = `<strong>Info Teknis Naskah Ekstra Tebal (&gt;650 Hlm):</strong> Punggung buku akan mencapai ketebalan &gt;4 cm. Kami sangat menyarankan penggunaan <strong>Kertas Bookpaper + Hard Cover</strong>, atau konsultasikan dengan Admin jika ingin dipecah menjadi <strong>2 Jilid (Volume 1 &amp; 2)</strong> agar jilidan lebih awet.`;
+            } else {
+                thickTipBox.classList.add('hidden');
+            }
 
             // Tentukan Tier Kuantitas & Harga Dasar per Buku
-            let unitPrice = priceTable.t2_4;
+            let unitPrice = getTierUnitPrice(priceTable, qty);
             let tierName = '2–4 Eks';
             let setupFee = 0;
 
             if (qty === 1) {
-                unitPrice = priceTable.t2_4;
                 setupFee = priceTable.setup1Eks;
                 tierName = 'Cetak Satuan (1 Eks)';
             } else if (qty >= 2 && qty <= 4) {
-                unitPrice = priceTable.t2_4;
                 tierName = 'Kategori: 2–4 Eks';
             } else if (qty >= 5 && qty <= 9) {
-                unitPrice = priceTable.t5_9;
                 tierName = 'Kategori: 5–9 Eks';
             } else if (qty >= 10 && qty <= 25) {
-                unitPrice = priceTable.t10_25;
                 tierName = 'Kategori: 10–25 Eks';
             } else if (qty >= 26 && qty <= 50) {
-                unitPrice = priceTable.t26_50;
                 tierName = 'Kategori: 26–50 Eks';
             } else {
-                unitPrice = priceTable.t51_plus;
                 tierName = 'Harga Grosir (> 50 Eks)';
             }
 
             document.getElementById('badge-detected-tier').textContent = tierName;
 
-            // Highlight baris tabel yang aktif
+            // Highlight baris tabel yang aktif (jika <= 300 halaman highlight barisnya, jika > 300 halaman highlight baris Paket 12)
             document.querySelectorAll('#tbody-a5 tr, #tbody-unesco tr, #tbody-a6 tr, #tbody-a4 tr').forEach(tr => tr.classList.remove('active-row'));
-            if (pkg.paket <= 12) {
-                const activeRowId = `row-${sizeCode.toLowerCase()}-${pkg.paket}`;
-                const rowEl = document.getElementById(activeRowId);
-                if (rowEl) rowEl.classList.add('active-row');
-            }
+            const highlightPaketNum = Math.min(12, pkg.paket);
+            const activeRowId = `row-${sizeCode.toLowerCase()}-${highlightPaketNum}`;
+            const rowEl = document.getElementById(activeRowId);
+            if (rowEl) rowEl.classList.add('active-row');
 
-            // Smart Tips untuk Konsumen (Mendorong tambah kuantitas)
+            // Smart Tips Hemat untuk Konsumen (ketika qty 1, 4, 9, 25, atau 50 eks)
             const tipBox = document.getElementById('smart-tip-box');
             const tipText = document.getElementById('smart-tip-text');
             if (qty === 1) {
@@ -1322,6 +1429,14 @@
                 const diffPerBook = priceTable.t5_9 - priceTable.t10_25;
                 tipBox.classList.remove('hidden');
                 tipText.innerHTML = `<strong>Tips Hemat:</strong> Tambah <strong>1 eks lagi (jadi 10 eks)</strong> agar harga cetak turun <strong>${formatRp(diffPerBook)}/buku</strong> (jadi ${formatRp(priceTable.t10_25)}/eks)! <button type="button" onclick="setExactQty(10)" class="underline font-extrabold text-brand-700 ml-1">Ubah jadi 10 Eks</button>`;
+            } else if (qty === 25) {
+                const diffPerBook = priceTable.t10_25 - priceTable.t26_50;
+                tipBox.classList.remove('hidden');
+                tipText.innerHTML = `<strong>Tips Hemat:</strong> Tambah <strong>1 eks lagi (jadi 26 eks)</strong> agar masuk kategori 26–50 Eks dan hemat <strong>${formatRp(diffPerBook)}/buku</strong> (jadi ${formatRp(priceTable.t26_50)}/eks)! <button type="button" onclick="setExactQty(26)" class="underline font-extrabold text-brand-700 ml-1">Ubah jadi 26 Eks</button>`;
+            } else if (qty === 50) {
+                const diffPerBook = priceTable.t26_50 - priceTable.t51_plus;
+                tipBox.classList.remove('hidden');
+                tipText.innerHTML = `<strong>Tips Hemat:</strong> Tambah <strong>1 eks lagi (jadi 51 eks)</strong> untuk mendapatkan tarif grosir terendah <strong>${formatRp(priceTable.t51_plus)}/eks</strong>! <button type="button" onclick="setExactQty(51)" class="underline font-extrabold text-brand-700 ml-1">Ubah jadi 51 Eks</button>`;
             } else {
                 tipBox.classList.add('hidden');
             }
@@ -1342,7 +1457,22 @@
             // Update Elemen Rincian (Receipt)
             const sizeLabel = getSizeDisplayLabel(sizeCode);
             document.getElementById('sum-size').textContent = sizeLabel;
-            document.getElementById('sum-pages').textContent = `${currentState.pages} Hlm (Paket ${pkg.paket}: ${pkg.label} Hlm)`;
+
+            const rowExtraBreakdown = document.getElementById('row-extra-pages-breakdown');
+            const pkg12PriceObj = getSizePriceObj(packagesData[11], sizeCode);
+            const pkg12BaseUnitPrice = getTierUnitPrice(pkg12PriceObj, qty);
+            const extraPageCostPerBook = pkg.extraBlocks * priceTable.increment;
+
+            if (pkg.paket <= 12) {
+                document.getElementById('sum-pages').textContent = `${currentState.pages} Hlm (Paket ${pkg.paket}: ${pkg.label} Hlm)`;
+                rowExtraBreakdown.classList.add('hidden');
+            } else {
+                document.getElementById('sum-pages').textContent = `${currentState.pages} Hlm (Paket 12 + ${pkg.extraBlocks} Blok: ${pkg.label} Hlm)`;
+                rowExtraBreakdown.classList.remove('hidden');
+                document.getElementById('label-extra-pages-breakdown').textContent = `Rincian (${pkg.extraBlocks}x20 Hlm di atas 300):`;
+                document.getElementById('sum-extra-pages-breakdown').textContent = `${formatRp(pkg12BaseUnitPrice)} + ${formatRp(extraPageCostPerBook)}`;
+            }
+
             document.getElementById('sum-qty').textContent = `${qty} Eksemplar`;
             document.getElementById('sum-unit-price').textContent = `${formatRp(unitPrice)} / eks`;
 
@@ -1378,6 +1508,9 @@
             // Susun Link Pesan WhatsApp Otomatis
             const customTitle = document.getElementById('input-title').value.trim();
             const coverLabel = isHardCover ? `Hard Cover (+${formatRp(priceTable.hardcover)}/eks)` : 'Soft Cover (Standar)';
+            const paketDescWa = (pkg.paket <= 12)
+                ? `${currentState.pages} Halaman (Paket ${pkg.paket}: ${pkg.label} Hlm)`
+                : `${currentState.pages} Halaman (Paket 12 [300 Hlm] + Ekstra ${pkg.extraBlocks} Blok [${pkg.label} Hlm])`;
 
             let waLines = [
                 'Halo Admin *Klik Media*, saya ingin memesan / konsultasi cetak buku dengan rincian simulasi berikut:',
@@ -1387,10 +1520,13 @@
                 waLines.push(`• *Pemesan / Judul:* ${customTitle}`);
             }
             waLines.push(`• *Ukuran Buku:* ${sizeLabel}`);
-            waLines.push(`• *Jumlah Halaman:* ${currentState.pages} Halaman (Paket ${pkg.paket}: ${pkg.label} Hlm)`);
+            waLines.push(`• *Jumlah Halaman:* ${paketDescWa}`);
             waLines.push(`• *Jumlah Cetak:* ${qty} Eksemplar (${tierName})`);
             waLines.push(`• *Jenis Cover:* ${coverLabel}`);
             waLines.push(`• *Harga Cetak Dasar:* ${formatRp(unitPrice)} / eks`);
+            if (pkg.paket > 12) {
+                waLines.push(`  _(Rincian: Tarif Paket 12 ${formatRp(pkg12BaseUnitPrice)} + Ekstra ${pkg.extraBlocks}x20 Hlm ${formatRp(extraPageCostPerBook)})_`);
+            }
             if (setupFee > 0) {
                 waLines.push(`• *Biaya Setup 1 Eks:* +${formatRp(setupFee)}`);
             }
